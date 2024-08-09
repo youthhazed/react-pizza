@@ -10,7 +10,8 @@ function PizzaBlock({title, price, image, sizes, types}) {
 
     return (
         
-        <div className="pizza-block">
+        <div className="pizza-block-wrapper">
+          <div className="pizza-block">
               <img
                 className="pizza-block__image"
                 src={image}
@@ -23,7 +24,6 @@ function PizzaBlock({title, price, image, sizes, types}) {
                     types.map((typeId) => (
                     <li onClick={() => setActiveType(typeId)} className={activeType === typeId ? 'active' : ''}>{typeNames[typeId]}</li>
                     ))
-
                   }
                 </ul>
                 <ul>
@@ -53,6 +53,7 @@ function PizzaBlock({title, price, image, sizes, types}) {
                 </button>
               </div>
             </div>
+        </div>
     )
 }
 
