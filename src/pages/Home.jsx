@@ -4,15 +4,32 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
+import Pagination from '../components/Pagination';
 
-const Home = () => {
+const Home = ({ searchValue }) => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
   const [sortType, setSortType] = React.useState({ name: 'aлфавиту', sortProperty: 'title' });
 
-  console.log(sortType);
-
+  const pizzas = items
+    .filter((item) => {
+      if (item.title.toLowerCase().includes(searchValue.toLowerCase())) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    .map((obj) => (
+      <PizzaBlock
+        key={obj.id}
+        title={obj.title}
+        price={obj.price}
+        image={obj.imageUrl}
+        sizes={obj.sizes}
+        types={obj.types}
+      />
+    ));
   React.useEffect(() => {
     setIsLoading(true);
     fetch(
@@ -38,19 +55,9 @@ const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {isLoading
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-          : items.map((obj) => (
-              <PizzaBlock
-                key={obj.id}
-                title={obj.title}
-                price={obj.price}
-                image={obj.imageUrl}
-                sizes={obj.sizes}
-                types={obj.types}
-              />
-            ))}
+        {isLoading ? [...new Array(6)].map((_, index) => <Skeleton key={index} />) : pizzas}
       </div>
+      <Pagination />
     </div>
   );
 };
