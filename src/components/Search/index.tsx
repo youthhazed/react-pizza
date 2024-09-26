@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchContext } from '../../App';
+import { SearchContext } from '../../App.js';
 import lodash from 'lodash';
 
 import styles from './Search.module.scss';
@@ -9,12 +9,12 @@ import { IoCloseOutline } from 'react-icons/io5';
 const Search = () => {
   const [value, setValue] = React.useState('');
   const { setSearchValue } = React.useContext(SearchContext);
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onClear = () => {
     setSearchValue('');
     setValue('');
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   const updateSearchValue = React.useCallback(
@@ -24,7 +24,7 @@ const Search = () => {
     [],
   );
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     setValue(inputValue);
     updateSearchValue(inputValue);

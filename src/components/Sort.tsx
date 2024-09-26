@@ -6,24 +6,30 @@ function Sort() {
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filter.sort);
   const [open, setOpen] = React.useState(false);
+ 
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
-  const sortRef = React.useRef();
-  const list = [
+  type ListItem = {
+    name: string,
+    sortProperty: string
+  }
+
+  const list: ListItem[] = [
     { name: 'популярности', sortProperty: 'rating' },
     { name: 'цене', sortProperty: 'price' },
     { name: 'алфавиту', sortProperty: 'title' },
   ];
 
-  function onClickListItem(filterName) {
+  function onClickListItem(filterName: ListItem) {
     dispatch(setSort(filterName));
     setOpen(false);
   }
 
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setOpen(false);
-      }
+      } 
     };
 
     document.body.addEventListener('click', handleClickOutside);

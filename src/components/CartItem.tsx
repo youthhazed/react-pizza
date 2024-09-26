@@ -2,7 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem, removeItem, minusItem } from '../redux/slices/cartSlice';
 
-const CartItem = ({ id, title, type, size, price, count, image }) => {
+type CartItemProps = { id: string, title: string, type: string, size: number, price: number, count: number, image: string }
+
+const CartItem: React.FC<CartItemProps> = ({ id, title, type, size, price, count, image }) => {
   const dispatch = useDispatch();
 
   const onClickPlus = () => {
@@ -26,20 +28,20 @@ const CartItem = ({ id, title, type, size, price, count, image }) => {
   };
 
   return (
-    <div class="cart__item">
-      <div class="cart__item-img">
-        <img class="pizza-block__image" src={image} alt="Pizza" />
+    <div className="cart__item">
+      <div className="cart__item-img">
+        <img className="pizza-block__image" src={image} alt="Pizza" />
       </div>
-      <div class="cart__item-info">
+      <div className="cart__item-info">
         <h3>{title}</h3>
         <p>
           {type}, {size} см.
         </p>
       </div>
-      <div class="cart__item-count">
+      <div className="cart__item-count">
         <div
           onClick={onClickMinus}
-          class="button button--outline button--circle cart__item-count-minus">
+          className="button button--outline button--circle cart__item-count-minus">
           <svg
             width="10"
             height="10"
@@ -57,7 +59,7 @@ const CartItem = ({ id, title, type, size, price, count, image }) => {
         <b>{count}</b>
         <div
           onClick={onClickPlus}
-          class="button button--outline button--circle cart__item-count-plus">
+          className="button button--outline button--circle cart__item-count-plus">
           <svg
             width="10"
             height="10"
@@ -73,11 +75,11 @@ const CartItem = ({ id, title, type, size, price, count, image }) => {
           </svg>
         </div>
       </div>
-      <div class="cart__item-price">
+      <div className="cart__item-price">
         <b>{price * count}</b>
       </div>
-      <div onClick={onClickRemove} class="cart__item-remove">
-        <div class="button button--outline button--circle">
+      <div onClick={onClickRemove} className="cart__item-remove">
+        <div className="button button--outline button--circle">
           <svg
             width="10"
             height="10"
